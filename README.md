@@ -7,6 +7,8 @@ cd backend
 cd frontend
 npm run dev
 
+NOTE: .envrc requires a Google API key with JavaScript Map API (see example)
+
 #demo of app
 run in app size window pane
 http://localhost:3000/
