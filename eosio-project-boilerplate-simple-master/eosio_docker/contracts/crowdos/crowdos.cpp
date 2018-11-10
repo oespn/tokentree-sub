@@ -61,6 +61,7 @@ class crowdos : public eosio::contract {
         // usage: assume caller is the Checker
         require_auth(username); // this user is a checker
         // Let's make sure the primary key doesn't exist
+
         eosio_assert(_checks.find(listingkey+username) == _checks.end(), "you can only check once ;)");
         
         //get from listingkey
@@ -94,8 +95,12 @@ class crowdos : public eosio::contract {
     void validate(account_name username, uint64_t checkkey, time validated, std::string comment, bool vote) {
         require_auth(username); // this user is a validator
         // Let's make sure the primary key doesn't exist
-
+    
         auto check = _checks.find(checkkey);
+        auto usercheck_idx = _checks.get_index<N(get_checker)>();
+        auto userwasachecker = usercheck_idx.find(username);
+        eosio_assert(userwasachecker.end(), "Validations can only be performed by users who checked and voted");
+
         auto listing = _listings.find(check->listingkey);
         auto validator_idx = _validations.get_index<N(by_validatorkey)>();
         auto exists = validator_idx.find(username);
@@ -238,18 +243,16 @@ class crowdos : public eosio::contract {
     struct check {
       uint64_t key; // primary key
       uint64_t listingkey; // fk
+      account_name checker; // fk
       
       uint64_t staked;
       uint64_t earned;  // this is determined and distributed when the contract ends
 
-      account_name company; // company primary key
-      account_name checker; // checker primary key
       time checked; // set when user checks the article
       bool vote;
       std::string comment;
 
       uint64_t primary_key()const { return key; }  
-      account_name get_company() const {return company; }
       account_name get_checker() const {return checker; }
       uint64_t by_listingkey()const { return listingkey; }
 

@@ -2,49 +2,47 @@
   <v-layout justify-center align-center fill-height column>
     <v-flex xs12 md8 lg6>
       <v-card class="mb-3">
-        <v-card-title >Offer (by Sponsor)</v-card-title>
+        <v-card-title >Listing (by Company)</v-card-title>
         <v-divider/>
         <v-card-text>
-          <v-flex xs12>
-            <v-text-field xs6 v-model="lat" placeholder="Latitude" />
-            <v-text-field xs6 v-model="lng" placeholder="Longitude"/>
-          </v-flex>
-          <v-text-field v-model="radius" placeholder="Radius (metres)"/>
+          <v-text-field v-model="title" placeholder="Title"/>
+          <v-text-field v-model="description" placeholder="Description"/>
+          <v-text-field v-model="target" placeholder="Target"/>
           <v-text-field v-model="offer" placeholder="Offer Tokens"/>
           <v-text-field v-model="expires" placeholder="Expires DateTime"/>
         </v-card-text>
         <v-divider/>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="postOffer">Post Offer</v-btn>
+          <v-btn @click="postListing">Post Listing</v-btn>
         </v-card-actions>
       </v-card>
       <v-card>
-        <v-card-title >Plant a tree (as User)</v-card-title>
+        <v-card-title >Record a Vote (a check by User)</v-card-title>
         <v-card-text>
           <p>Once only</p>
-          <v-text-field v-model="plant_lat" placeholder="latitude" />
-          <v-text-field v-model="plant_lng" placeholder="longitude"/>
+          <v-text-field v-model="listingKey" placeholder="listing key" />
+          <v-text-field v-model="vote" placeholder="true = pass / false = fail"/>
+          <v-text-field v-model="comment" placeholder="If false => description of issue"/>
         </v-card-text>
         <v-divider/>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="plantTree">Plant tree</v-btn>
+          <v-btn @click="postCheck">Record check</v-btn>
         </v-card-actions>
       </v-card>
       <v-card>
-        <v-card-title >Verify tree (as User.Validator)</v-card-title>
+        <v-card-title >Verification vote on fail</v-card-title>
         <v-card-text>
-          <p>Can be called many times by same or various</p>
+          <p>Can be called once only for each user <br/> and must have been a voter</p>
           <v-text-field v-model="validator_lat" placeholder="latitude" />
-          <v-text-field v-model="validator_lng" placeholder="longitude"/>
           <v-text-field v-model="health" placeholder="health"/>
           <v-text-field v-model="comment" placeholder="comment"/>
         </v-card-text>
         <v-divider/>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="validateTree">Validate tree</v-btn>
+          <v-btn @click="validateVote">Validate Vote</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -60,29 +58,24 @@
 
 export default {
   data: () => ({
-    lat: null,
-    lng: undefined,
-    radius: null,
+      title: null,
+      description: null,
     offer: null,
     expires: null,
-    plant_lat: null,
-    plant_lng: null,
-    validator_lat: null,
-    validator_lng: null,
-    health: 3,
+    vote: true,
     comment: ""
     
   }),
   methods: {
-    /*postOffer(){        
-        console.log(this.lat, this.lng);
+    /*postListing(){        
+        //console.log(this.lat, this.lng);
         eos.contract('testacc').then(acc => acc.addoffer("acc", this.lat, this.radius.number(), "test", this.offer, this.expires.toISOString() ));
         //eos.contract('testacc').then(acc => acc.get)
         this.plant_lat = this.lat;
         this.plant_lng = this.lng;
         console.log("survived");
     },  
-    plantTree(){        
+    postCheck(){        
         var now = new Date();
         eos.contract('testacc').then(acc => acc.plant("acc", this.lat, this.lat, now.toISOString() ));
         console.log("planted tree");
@@ -90,11 +83,11 @@ export default {
         //lat,lng,radius,desc,tokens    
       //}
     },
-    getTrees(){
+    getVotes(){
       //eos.contract('testacc').then(acc => acc.plant("acc", this.lat, this.lat, now.toISOString() ));
       
     },
-    validateTree(){   
+    validateVote(){   
         var now = new Date();     
         eos.contract('testacc').then(acc => acc.validate("acc", this.lat, now.toISOString(), comment,  health ));
         console.log("validated tree");
