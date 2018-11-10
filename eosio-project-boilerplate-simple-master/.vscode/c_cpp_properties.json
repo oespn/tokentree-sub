@@ -4,6 +4,7 @@
             "name": "Mac",
             "includePath": [
                 "~/eos/contracts",
+                "~/eos/contracts/**",
                 "~/eos/externals/**",
                 "${workspaceFolder}/**"
             ],
