@@ -20,12 +20,11 @@
                 <v-card-actions>
                   <v-btn flat dark>Learn more</v-btn>
                   <v-img 
-                    src="~assets/img/crowdos_logo.png" 
+                    :src="require('~/assets/img/crowdos_logo.png')" 
                     name="welcomelogo"
                     height="25px" 
                     contain
                   ></v-img>
-                  <!-- NC->AE:** images not loading ? -->
                 </v-card-actions>
                 
               </v-card>
@@ -65,9 +64,8 @@
                 </v-card-actions>
               </v-card>
             </v-flex>
-<!-- NC->AE:** $index ? why not working? -->
-            <v-flex xs12 v-for="t in trees" :key="t.id">
-              <v-card :class="{'purple': $index % 2 === 0, 'indigo darken-2': $index % 2 !== 0 }"  class="white--text">
+            <v-flex xs12 v-for="(t, i) in trees" :key="t.id">
+              <v-card :class="{'purple': i % 2 === 0, 'indigo darken-2': i % 2 !== 0 }"  class="white--text">
                 <v-layout>
                   <v-flex xs4>
                     <v-img
@@ -106,21 +104,18 @@
       
         </v-container>
 
+        <Verifications v-model="verify" :trees="trees"></Verifications>
         <v-bottom-nav :value="true">
-            <Verifications v-model="verify" :trees="trees"></Verifications>
             
             <v-btn @click="plant = true" flat>
               <span>Listing</span>
               <v-icon>add_circle</v-icon>
             </v-btn>
-            <v-badge color="red">
-              <span slot="badge">!</span>
-              <v-btn @click="verify = true" flat>
-                <span>Messages</span>
-                <v-icon>mail</v-icon>
-              </v-btn>
-            </v-badge>
-                  <v-btn @click="profile = true" flat>
+            <v-btn @click="verify = true" flat>
+              <span>Messages</span>
+              <v-icon>mail</v-icon>
+            </v-btn>
+            <v-btn @click="profile = true" flat>
               <span>Profile</span>
               <v-icon>account_circle</v-icon>
             </v-btn>
