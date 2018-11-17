@@ -92,6 +92,25 @@ class crowdos : public eosio::contract {
     } 
 
     /// @abi action
+    void challenge(account_name username, const std::string& reason, uint32_t checkkey, const std::string& article, time expires) {
+        require_auth(username); // this user is the checker that is challenging
+        // Let's make sure the primary key doesn't exist
+        eosio_assert(_challenges.find(checkkey) == _challenges.end(), "This challenge already exists");
+        //** future: charge the sender rather than self 
+        
+        _challenges.emplace(get_self(), [&]( auto& p ) {
+            p.key = _challenges.available_primary_key();
+            p.checker = username; // original
+            p.title = title;
+            p.description = description;
+            p.offervalue = offervalue;
+            p.expires = expires;
+            p.votestake = 1;
+        });
+    } 
+
+
+    /// @abi action
     void validate(account_name username, uint64_t checkkey, time validated, std::string comment, bool vote) {
         require_auth(username); // this user is a validator
         // Let's make sure the primary key doesn't exist
@@ -238,6 +257,7 @@ class crowdos : public eosio::contract {
         const_mem_fun<listing, uint64_t, &listing::by_offervalue>
         >
     > listings;
+    //*** assess making these tables public
     
     /// @abi table check
     struct check {

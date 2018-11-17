@@ -1,0 +1,49 @@
+[
+    {
+      "id": "1",
+      "title": "EOS ERC-20 Smart Contract",
+      "description": "Is the smart contract secure?",
+      "conditions": "We wont accept code style issues or items associated with X. ",
+      "target": 10,
+      "stake": 1,
+      "createdAt": "3480931863",
+      "bounty": 500,
+      "article": "https://github.com/xyz",
+      "company": {
+        "name": "EOS",
+        "picture": "",
+        "id": "3ouh4i1ug497813g49g"
+      }
+    },
+    {
+      "id": "aeu3ohi342e4u2g5iug245",
+      "vote": true,
+      "checker": "Jack",
+      "checkedAt": "3480931863",
+      "validations": []
+    },
+    {
+      "id": "aeu3og2422hi4u2g5iug245",
+      "vote": true,
+      "checker": "Alberto",
+      "checkedAt": "3480931863",
+      "validations": []
+    },
+    {
+      "id": "aeu3ohi42g442u2g5iug245",
+      "vote": true,
+      "checker": "Laurie",
+      "checkedAt": "3480931863",
+      "validations": []
+    },
+    {
+        "id": "aeu3ohi42g442u2g5iug245",
+        "vote": false,
+        "checker": "Hank",
+        "checkedAt": "3480931863",
+        "comment": "Issue on line XYZ: this could cause an overflow allowing a script injection ... blah",
+        "validations": [
+            
+        ]
+      }
+  ]
