@@ -19,6 +19,7 @@
                     right
                     fab
                     nuxt-link to="/listingcreate" @click="drawer=false"
+                    transition="slide-right"
                   >
                     <v-icon>add</v-icon>
                   </v-btn>

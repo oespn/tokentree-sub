@@ -6,12 +6,10 @@
             <v-icon 
                 dark
               >
-                arrow_back
+               arrow_back
             </v-icon>
 
-
           </v-toolbar-side-icon>
-          <v-toolbar-title>
           <v-img 
             :src="require('~/assets/img/crowdos_logo.png')" 
             name="welcomelogo"
@@ -19,6 +17,12 @@
             width="100"
             contain
           ></v-img>
+           <v-spacer></v-spacer>
+          <v-toolbar-title>
+           
+          
+          <v-card-title class="title font-weight-regular">New Listing</v-card-title>
+
           </v-toolbar-title>
           <v-spacer></v-spacer>
 
@@ -28,62 +32,55 @@
           style="max-height:700px"
           class="scroll-y"
           fluid
-          grid-list-lg
+
         >
 <v-stepper v-model="e1" vertical>
   
         <v-stepper-step :complete="e1 > 1" editable step="1">
             Step 1
-            <small>Summarize if needed</small>
+            <small>What is the bounty?</small>
         </v-stepper-step>
 
                 <v-stepper-content step="1">
-          <v-card
-            class="mb-5"
-            
-          >
+
           
             <v-form ref="form" class="form-page" v-model="valid" lazy-validation>
                 <v-text-field
-                v-model="name"
+                v-model="title"
                 :rules="nameRules"
-                :counter="10"
-                label="Name"
+                :counter="150"
+                label="Title"
                 required
                 ></v-text-field>
-                <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="E-mail"
+                <v-textarea
+                auto-grow
+                v-model="description"
+                :counter="250"
+                
+                label="Description"
                 required
-                ></v-text-field>
+                ></v-textarea>
                 <v-select
                 v-model="select"
                 :items="items"
-                :rules="[v => !!v || 'Item is required']"
-                label="Item"
+                :rules="[v => !!v || 'Hack type is required']"
+                label="Hack Type"
                 required
                 ></v-select>
-                <v-checkbox
-                v-model="checkbox"
-                :rules="[v => !!v || 'You must agree to continue!']"
-                label="Do you agree?"
+                <v-text-field
+                v-model="target"
+                placeholder="http://"
+                label="Source code / Target URL"
                 required
-                ></v-checkbox>
-
-                <!--v-btn
-                :disabled="!valid"
-                @click="submit"
-                >
-                submit
-                </v-btn>
-                <v-btn @click="clear">clear</v-btn>
-                -->
+                ></v-text-field>
+                <v-text-field
+                  v-model.number="bounty"
+                  box
+                  label="Bounty EOS"
+                  type="number"
+                ></v-text-field>
             </v-form>
-                    
-          
-          
-          </v-card>
+
   
           <v-btn
             color="primary"
@@ -95,15 +92,62 @@
           <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
   
-        <v-divider></v-divider>
+
   
-        <v-stepper-step :complete="e1 > 2" step="2">Step 2</v-stepper-step>
+        <v-stepper-step :complete="e1 > 2" step="2">Step 2
+          <small>Conditions &amp; communication</small>
+        </v-stepper-step>
         <v-stepper-content step="2">
           <v-card
             class="mb-5"
-            color="grey lighten-1"
-            height="200px"
-          ></v-card>
+          >
+          <v-form ref="form" class="form-page" v-model="valid" lazy-validation>
+                <v-text-field
+                  v-model.number="maxchecks"
+                  box
+                  label="Max checks"
+                  type="number"
+                ></v-text-field>
+                 
+                <v-text-field
+                  slot="activator"
+                  v-model="expiry"
+                  label="Expires"
+                  prepend-icon="event"
+                  readonly
+                ></v-text-field>
+                <v-date-picker v-model="date" @input="expiryShowing = false"></v-date-picker>
+
+                <v-text-field
+                v-model="conditions"
+                label="conditions"
+                required
+                ></v-text-field>
+                <v-text-field
+                v-model="email"
+                :rules="emailRules"
+                label="Security contact E-mail"
+                required
+                ></v-text-field>
+                <v-select
+                v-model="select"
+                :items="items"
+                :rules="[v => !!v || 'Hack type is required']"
+                label="Hack Type"
+                required
+                ></v-select>
+                <h2>crowdOS cares about coders time</h2>
+                <p>All listings are subject to our <a href="">fairness conditions</a></p>
+                <v-checkbox
+                v-model="checkbox"
+                :rules="[v => !!v || 'You must agree to continue!']"
+                label="Do you agree?"
+                required
+                ></v-checkbox>
+
+            </v-form>
+          
+          </v-card>
   
           <v-btn
             color="primary"
@@ -114,9 +158,11 @@
   
           <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
-        <v-divider></v-divider>
+
   
-        <v-stepper-step step="3">Step 3</v-stepper-step>
+        <v-stepper-step step="3">Step 3
+          <small>Share</small>
+        </v-stepper-step>
 
         <v-stepper-content step="3">
           <v-card
@@ -129,10 +175,10 @@
             color="primary"
             @click="e1 = 1"
           >
-            Continue
+            close
           </v-btn>
   
-          <v-btn flat>Cancel</v-btn>
+          <v-btn flat>Done</v-btn>
         </v-stepper-content>
   
       <v-stepper-items>
@@ -163,7 +209,14 @@
     data: () => ({
       e1: 0,
       valid: true,
-      name: '',
+      title: '',
+      description: '',
+      conditions: '',
+      bounty: null,
+      expiry: null,
+      expiryShowing: false,
+      type: '',
+      target: '',
       nameRules: [
         v => !!v || 'Name is required',
         v => (v && v.length <= 10) || 'Name must be less than 10 characters'
@@ -175,10 +228,10 @@
       ],
       select: null,
       items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4'
+        'Smart contract integrity',
+        'Security vulnerability',
+        'Penteration breach',
+        'Source code improvement'
       ],
       checkbox: false
     }),
