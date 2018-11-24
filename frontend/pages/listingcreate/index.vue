@@ -1,5 +1,35 @@
 <template>
+<v-card>
+        <v-toolbar dark>
+          
+          <v-toolbar-side-icon > <!--** AE: need a back action --> 
+            <v-icon 
+                dark
+              >
+                arrow_back
+            </v-icon>
 
+
+          </v-toolbar-side-icon>
+          <v-toolbar-title>
+          <v-img 
+            :src="require('~/assets/img/crowdos_logo.png')" 
+            name="welcomelogo"
+            height="25px" 
+            width="100"
+            contain
+          ></v-img>
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+
+      </v-toolbar>
+        <v-container
+          id="scroll-target"
+          style="max-height:700px"
+          class="scroll-y"
+          fluid
+          grid-list-lg
+        >
 <v-stepper v-model="e1" vertical>
   
         <v-stepper-step :complete="e1 > 1" editable step="1">
@@ -115,9 +145,8 @@
 
 
 
-
-
-
+        </v-container>
+</v-card>
 
 </template>
 
@@ -126,6 +155,11 @@
   //import axios from 'axios'
 
   export default {
+    //** AE: not sure how to get this to be called
+    transition (to, from) {
+      if (!from) return 'slide-left'
+      return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
+    },
     data: () => ({
       e1: 0,
       valid: true,

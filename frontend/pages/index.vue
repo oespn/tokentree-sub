@@ -5,18 +5,48 @@
   >
 
     <v-card>
+
+        <div style="height: 56px; position: absolute; bottom:70px;right:30px;">
+    
+                <v-fab-transition>
+                  
+                  <v-btn
+                    v-show="canAddListing()"
+                    color="pink"
+                    dark
+                    absolute
+                    bottom
+                    right
+                    fab
+                    nuxt-link to="/listingcreate" @click="drawer=false"
+                  >
+                    <v-icon>add</v-icon>
+                  </v-btn>
+                  
+                </v-fab-transition>
+              </div>
+
         <v-toolbar dark>
           
           <v-toolbar-side-icon @click.native.stop="drawer = !drawer"> 
-            <v-badge color="green" right overlap>
-            <v-icon slot="badge" dark small >notifications</v-icon>
-            <v-icon
-              large
-              dark
-            >
-              menu
-            </v-icon>
+
+            <v-badge color="green" right overlap v-show="isNotification()">
+              <v-icon slot="badge" dark small v-show="isNotification()" >notifications</v-icon>
+              <v-icon
+                large
+                dark
+              >
+                menu
+              </v-icon>
             </v-badge>
+            <v-icon 
+                v-show="!isNotification()"
+                dark
+              >
+                menu
+            </v-icon>
+
+
           </v-toolbar-side-icon>
           
           <v-toolbar-title>
@@ -34,7 +64,7 @@
         </v-btn>
         </v-toolbar>
         <div v-if="listingSelected" class="listing-card">
-        <ReportCard v-model="report" :listing="listingSelected"></ReportCard>
+        <ShareListingCard v-model="share" :listing="listingSelected"></ShareListingCard>
         </div>
         <v-container
           id="scroll-target"
@@ -43,7 +73,10 @@
           fluid
           grid-list-lg
         >
+
           <v-layout row wrap v-scroll>
+              
+
             <v-flex xs12>
               
               <v-card color="blue-grey darken-2" class="white--text">
@@ -94,7 +127,7 @@
                   $USD 5,250
                   <v-spacer></v-spacer>
                   <v-spacer></v-spacer>
-                  <v-btn flat dark><v-icon>launch</v-icon> Check</v-btn>
+                  <v-btn flat dark  ><v-icon>launch</v-icon> Check</v-btn>
                   <v-spacer></v-spacer>
                   <v-btn flat dark><v-icon>bug_report</v-icon> Report</v-btn>
                   <v-spacer></v-spacer>
@@ -130,15 +163,17 @@
                   $USD {{t.bounty}}
                   <v-spacer></v-spacer>
                   <v-spacer></v-spacer>
-                  <v-btn flat dark><v-icon>launch</v-icon> Check</v-btn>
+                  <v-btn flat dark @click="openLink(t)" ><v-icon>launch</v-icon> Check</v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn @click="listingReport(t)" flat dark><v-icon>bug_report</v-icon> Report</v-btn>
+                  <v-btn @click="listingReport(t)" nuxt-link to="/listingcreate" flat dark><v-icon>bug_report</v-icon> Report</v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn icon dark><v-icon>share</v-icon></v-btn>
+                  <v-btn icon dark @click="listingShare(t)" ><v-icon>share</v-icon></v-btn>
                 </v-card-actions>
               </v-card>
+
             </v-flex>
 
+ 
           
           </v-layout>
       
@@ -161,6 +196,7 @@
            
                     
           </v-bottom-nav>
+
         </v-container>
 
        
@@ -221,6 +257,16 @@
             <v-list-tile-title>John Leider</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile @click="accountCompany=!accountCompany; drawer=false;" small>
+            <v-list-tile-action>
+              <v-icon>how_to_reg</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+            <v-list-tile-title>{{getMode()}}
+               </v-list-tile-title>
+               <span class="caption"> Switch to {{getModeSwitchTo()}}</span>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
 
       <v-list class="pt-0" dense>
@@ -237,6 +283,7 @@
             <v-list-tile-title>Notifications </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+
         <v-list-tile
           v-for="item in items"
           :key="item.title"
@@ -259,9 +306,7 @@
             <v-list-tile-content>
             <v-list-tile-title>Test page </v-list-tile-title>
           </v-list-tile-content>
-
-
-      </v-list-tile>
+        </v-list-tile>
       </v-list>
       
 
@@ -305,22 +350,26 @@ import Verifications from '~/components/Verifications'
 import TreeCard from '~/components/TreeCard'
 import ListingCard from '~/components/ListingCard'
 import ReportCard from '~/components/ReportCard'
-
+import ShareListingCard from '~/components/ShareListingCard'
 export default {
   components: {
     Map,
     Verifications,
     TreeCard,
     ListingCard,
-    ReportCard
+    ReportCard,
+    ShareListingCard
   },
   data: () => ({
+    accountCompany: true,
     verify: false,
     plant: false,
     report: false,
+    share: false,
     treeSelected: null,
     listingSelected: null,
 
+    addhidden: false,
     drawer: null,
         items: [
           { title: 'Add Listing', icon: 'add_circle', link: '/listingcreate', click: 'drawer=true' },
@@ -358,9 +407,28 @@ export default {
     right () {
       this.treeSelected = this.trees[(this.selectedIndex + this.trees.length - 1) % this.trees.length]
     },
+    openLink (listing){
+      window.location.href = 'https://vc.eos.io';
+    },
     listingReport (listing) {
       this.listingSelected = listing;
       this.report = true;
+    },
+    listingShare (listing) {
+      this.listingSelected = listing;
+      this.share = true;
+    },
+    isNotification (){
+      return !this.accountCompany; 
+    },
+    canAddListing (){
+      return this.accountCompany; 
+    },
+    getMode(){
+      return this.accountCompany ? "Company" : "Coder";
+    },
+    getModeSwitchTo(){
+      return !this.accountCompany ? "Company" : "Coder";
     }
 
 
