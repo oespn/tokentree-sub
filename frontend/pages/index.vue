@@ -27,14 +27,15 @@
                 </v-fab-transition>
               </div>
 
-        <v-toolbar dark>
+        <v-toolbar dark 
+          :extension-height="accountCompany ? 30:1"
+          >
           
           <v-toolbar-side-icon @click.native.stop="drawer = !drawer"> 
 
             <v-badge color="green" right overlap v-show="isNotification()">
               <v-icon slot="badge" dark small v-show="isNotification()" >notifications</v-icon>
               <v-icon
-                large
                 dark
               >
                 menu
@@ -63,6 +64,28 @@
         <v-btn icon>
           <v-icon>search</v-icon>
         </v-btn>
+
+        <v-tabs
+          v-show="accountCompany==true"
+          slot="extension"
+          v-model="tab"
+          grow
+          dark
+          align-with-title
+          :height="accountCompany ? 30:1"
+        >
+          <v-tabs-slider color="green"></v-tabs-slider>
+
+          <v-tab>
+            All
+          </v-tab>
+          <v-tab>
+            Mine
+          </v-tab>
+        </v-tabs>
+
+
+
         </v-toolbar>
         <div v-if="listingSelected" class="listing-card">
         <ShareListingCard v-model="share" :listing="listingSelected"></ShareListingCard>
@@ -77,10 +100,11 @@
 
           <v-layout row wrap v-scroll>
               
-
-            <v-flex xs12>
-              
-              <v-card color="blue-grey darken-2" class="white--text">
+          <v-tabs-items v-model="tab">
+          <v-tab-item>
+            
+            <v-flex xs12 >
+              <v-card v-show="!accountCompany" color="blue-grey darken-2" class="white--text">
                 <v-card-title primary-title>
                   <div class="headline">Checking code pays!</div>
 
@@ -100,7 +124,32 @@
                 </v-card-actions>
                 
               </v-card>
+
+              <v-card v-show="accountCompany" color="blue-grey darken-2" class="white--text">
+                <v-card-title primary-title>
+                  <div class="headline">Improve security and exposure</div>
+
+                  <div>Grow your brand while increasing security!</div>
+                </v-card-title>
+             
+
+                <v-card-actions>
+                  <v-btn flat dark>Learn more</v-btn>
+                    <v-img 
+                      :src="require('~/assets/img/crowdos_logo.png')" 
+                      name="welcomelogo"
+                      height="25px" 
+                      width="100"
+                      contain
+                    ></v-img>
+                </v-card-actions>
+                
+              </v-card>
+
+
+
             </v-flex>
+           
 
             <v-flex xs12>
               <v-card color="cyan darken-2" class="white--text">
@@ -173,14 +222,53 @@
               </v-card>
 
             </v-flex>
+          </v-tab-item>
+          <v-tab-item>
+            <v-flex xs12>
+              <v-card color="blue-grey darken-2" class="white--text">
+                <v-card-title primary-title>
+                  <div class="headline">Get the security of the crowd</div>
 
+                  <div>Incentise code checking by listing a bounty!</div>
+                </v-card-title>
+             
+
+                <v-card-actions>
+                  <v-btn flat dark>Learn more</v-btn>
+                    <v-img 
+                      :src="require('~/assets/img/crowdos_logo.png')" 
+                      name="welcomelogo"
+                      height="25px" 
+                      width="100"
+                      contain
+                    ></v-img>
+                </v-card-actions>
+                
+              </v-card>
+              <v-card style="height:400px" v-show="mylistingsCount()<3">
+                <v-img 
+                      :src="require('~/assets/img/arrow_action.png')" 
+                      name="arrowInstruction"
+                      width="200"
+                      style="position:absolute;right:70px;bottom:70px"
+
+                      contain
+            ></v-img>
+              </v-card>
+              
+            </v-flex>
+            
+
+          </v-tab-item>
+          </v-tabs-items>
  
           
           </v-layout>
       
-     <Verifications v-model="verify" :trees="trees"></Verifications>
+          <Verifications v-model="verify" :trees="trees"></Verifications>
+     <!--
         <v-bottom-nav :value="true">
-            <!-- retire this? -->
+             retire this? 
             <v-btn nuxt-link to="/listingcreate" flat>
               <span>Listing</span>
               <v-icon>add_circle</v-icon>
@@ -197,6 +285,7 @@
            
                     
           </v-bottom-nav>
+          -->
 
         </v-container>
 
@@ -285,6 +374,25 @@
           </v-list-tile-content>
         </v-list-tile>
 
+        <v-list-tile nuxt-link to="/" @click="drawer=false">
+            <v-list-tile-action>
+              <v-icon>list</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+            <v-list-tile-title>All listings </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+
+        <v-list-tile nuxt-link to="/reports" @click="drawer=false">
+            <v-list-tile-action>
+              <v-icon>bug_report</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+            <v-list-tile-title>{{accountCompany ? "Bug Reports":"My Reports"}} </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
         <v-list-tile
           v-for="item in items"
           :key="item.title"
@@ -300,6 +408,7 @@
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+
         <v-list-tile nuxt-link to="/listingcreate" @click="drawer=false">
             <v-list-tile-action>
               <v-icon>add_circle</v-icon>
@@ -362,7 +471,8 @@ export default {
     ShareListingCard
   },
   data: () => ({
-    accountCompany: true,
+    accountCompany: false,
+    tab: null,
     verify: false,
     plant: false,
     report: false,
@@ -374,7 +484,7 @@ export default {
     drawer: null,
         items: [
           { title: 'Add Listing', icon: 'add_circle', link: '/listingcreate', click: 'drawer=true' },
-          { title: 'Messages', icon: 'question_answer', link: '', click: 'verify = true' },
+          { title: 'Reports', icon: 'bug_report', link: '/reports', click: 'verify = true' },
           { title: 'Home', icon: 'dashboard', link: '/',  click: 'drawer=true' },
           { title: 'About', icon: 'question_answer', link: '',  click: 'drawer=true' }
         ]
@@ -430,8 +540,10 @@ export default {
     },
     getModeSwitchTo(){
       return !this.accountCompany ? "Company" : "Coder";
+    },
+    mylistingsCount(){
+      return 0;
     }
-
 
 
   },

@@ -202,6 +202,7 @@
 
   export default {
     //** AE: not sure how to get this to be called
+    // https://snipcart.com/blog/vuejs-transitions-animations
     transition (to, from) {
       if (!from) return 'slide-left'
       return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
