@@ -7,7 +7,8 @@ export default () => new Vuex.Store({
   state: {
     location: null,
     trees: require("~/assets/trees.json"),
-    offers: require("~/assets/offers.json")
+    offers: require("~/assets/offers.json"),
+    listings: require("~/assets/listings.json"),
   },
   getters: {
     location: state => state.location,
@@ -17,6 +18,7 @@ export default () => new Vuex.Store({
         .sort((a, b) => a.distance - b.distance)
       : [...state.trees],
     offers: state => state.offers,
+    listings: state => state.listings,
     treesMap: state => toMap(state.trees)
   },
   mutations: {
