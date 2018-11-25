@@ -2,7 +2,7 @@
 <v-card>
         <v-toolbar dark>
           
-          <v-toolbar-side-icon > <!--** AE: need a back action --> 
+          <v-toolbar-side-icon icon nuxt-link to="/"> <!--** AE: need a back action --> 
             <v-icon 
                 dark
               >

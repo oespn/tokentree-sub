@@ -2,7 +2,7 @@
   <v-card>
     <v-toolbar dark>
           
-          <v-toolbar-side-icon nuxt-link to="/"> <!--** AE: need a back action --> 
+          <v-toolbar-side-icon icon nuxt-link to="/"> <!--** AE: need a back action --> 
             <v-icon 
                 dark
               >
@@ -21,7 +21,7 @@
           <v-toolbar-title>
            
           
-          <v-card-title class="title font-weight-regular">Reports</v-card-title>
+          <v-card-title class="title font-weight-regular">My Reports</v-card-title>
 
           </v-toolbar-title>
           <v-spacer></v-spacer>
@@ -38,83 +38,103 @@
 
     <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
-
+            <v-subheader>
+                Pending
+            </v-subheader>
             <v-list two-line>
-            <template v-for="(item, index) in items">
+            <template v-for="(item, index) in items_pending">
                 <v-list-tile
                 :key="item.title"
                 avatar
                 ripple
-                nuxt-link :to="`reports/${item.id}`"
                 @click="toggle(index)"
+                nuxt-link to="/reportstatus"
                 style = "height: 80px;"
                 >
-                <v-list-tile-content>
+                <v-list-tile-content >
                      
                     <v-list-tile-title style = "height: 28px;">
 
                         <v-chip small label :color=item.type.color text-color="white">{{item.type.name}}</v-chip>
-                        {{ item.title }}
-                        <v-chip small label outline>{{item.score}}</v-chip>
+                        {{ item.company }}
+                      
                          
+                         <v-chip small color="yellow darken-2" outline>{{item.bounty}} EOS</v-chip>
+                         <v-chip small label>{{item.score}}</v-chip>
                     </v-list-tile-title>
                     <v-list-tile-sub-title class="text--primary">
-                        {{ item.headline }}
+                        {{ item.title }}
                     </v-list-tile-sub-title>
                     <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
                 </v-list-tile-content>
-
                 <v-list-tile-action>
                     <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
-                    <v-icon
-                    v-if="selected.indexOf(index) < 0"
-                    color="grey lighten-1"
-                    >
-                    star_border
-                    </v-icon>
-
-                    <v-icon
-                    v-else
-                    color="yellow darken-2"
-                    >
-                    star
-                    </v-icon>
-                    
                 </v-list-tile-action>
-                <v-list-tile-action>
-                    <v-icon                    
-                    >
-                    delete_outline
-                    </v-icon>
-                    
-                </v-list-tile-action>
+                
+            
                              
 
                 </v-list-tile>
                 <v-divider
-                v-if="index + 1 < items.length"
+                v-if="index + 1 < items_pending.length"
+                :key="index"
+                ></v-divider>
+            </template>
+            </v-list>
+
+            <v-subheader>
+                Won
+            </v-subheader>
+            <v-list two-line>
+            <template v-for="(item, index) in items_won">
+                <v-list-tile
+                :key="item.title"
+                avatar
+                ripple
+                @click="toggle(index)"
+                nuxt-link to="/reportstatus"
+                style = "height: 80px;"
+                >
+                <v-list-tile-content >
+                     
+                    <v-list-tile-title style = "height: 28px;">
+
+                        <v-chip small label :color=item.type.color text-color="white">{{item.type.name}}</v-chip>
+                        {{ item.company }}
+                      
+                         
+                         <v-chip small color="yellow darken-1" >{{item.bounty}} EOS</v-chip>
+                         <v-chip small color="yellow lighten-1" >{{item.jackpot}} EOS
+                             <v-icon right>flare</v-icon>
+                         </v-chip>
+                         
+                    </v-list-tile-title>
+                    <v-list-tile-sub-title class="text--primary">
+                        {{ item.title }}
+                    </v-list-tile-sub-title>
+                    <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                    <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
+                </v-list-tile-action>
+                
+            
+                             
+
+                </v-list-tile>
+                <v-divider
+                v-if="index + 1 < items_won.length"
                 :key="index"
                 ></v-divider>
             </template>
             </v-list>
 
 
-            <v-subheader>
-                Challenged&nbsp;
-                <small class="font-weight-light">&nbsp; No bounties are in dispute</small>
-            </v-subheader>
-
-            <v-subheader>
-                Bounties Awarded&nbsp;
-                <small class="font-weight-light">&nbsp; You have not awarded any bounties</small>
-            </v-subheader>
-
-        
  <v-expansion-panel popout>
      <v-expansion-panel-content>
  
           <div slot="header">
-            <v-list-tile-title>Dismissed</v-list-tile-title>
+            <v-list-tile-title>Closed</v-list-tile-title>
           </div>
 
             <v-list two-line>
@@ -123,21 +143,23 @@
                 :key="item.title"
                 avatar
                 ripple
-                
+                nuxt-link to="/reportstatus"
                 @click="toggle(index)"
                 style = "height: 80px;"
                 >
-                <v-list-tile-content>
+                <v-list-tile-content >
                      
                     <v-list-tile-title style = "height: 28px;">
 
                         <v-chip small label :color=item.type.color text-color="white">{{item.type.name}}</v-chip>
-                        {{ item.title }}
-                        <v-chip small label outline>{{item.score}}</v-chip>
+                        {{ item.company }}
+                      
+                         
+                         <v-chip small color="grey darken-2" outline>{{item.bounty}} EOS</v-chip>
                          
                     </v-list-tile-title>
                     <v-list-tile-sub-title class="text--primary">
-                        {{ item.headline }}
+                        {{ item.title }}
                     </v-list-tile-sub-title>
                     <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
                 </v-list-tile-content>
@@ -155,8 +177,7 @@
             </v-list>
     </v-expansion-panel-content>
 </v-expansion-panel>
-
-
+ 
         </v-flex>
     </v-layout>
 
@@ -183,96 +204,80 @@ var HACKTYPES = {
   export default {
     data () {
       return {
-        selected: [2,6],
-        items: [
+        //status: [2,6],
+        items_pending: [
           {
-            id: "aeu3ohi4u2g5iug212345",
             action: '15 min',
-            headline: 'Brunch this weekend?',
-            title: 'Ali Connors',
+            company: 'Atlassian',
+            title: 'Jira API Release 2.9',
             subtitle: "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?",
             type: HACKTYPES.PEN,
-            score: "5/10"
+            score: "5/1000",
+            bounty: "100"
           },
           {
-              id: "4342abc23",
             action: '2 hr',
-            headline: 'Summer BBQ',
-            title: 'me, Scrott, Jennifer',
+            company: 'EOS.IO',
+            title: 'Smart Contract',
             subtitle: "Wish I could come, but I'm out of town this weekend.",
             type: HACKTYPES.INT,
-            score: "7/8"
-          },
+            score: "7/800",
+            bounty: "500"
+          }],
+        items_won: [  
+          
           {
-              id: "4342abc23",
             action: '6 hr',
-            headline: 'Oui oui',
-            title: 'Sandra Adams',
+            company: 'AirBnB',
+            title: 'Developer API 2.6',
             subtitle: 'Do you have Paris recommendations? Have you ever been?',
             type: HACKTYPES.PEN,
-            score: "4/29"
-          },
-          {
-              id: "4342abc23",
-            action: '12 hr',
-            headline: 'Birthday gift',
-            title: 'Trevor Hansen',
-            subtitle: 'Have any ideas about what we should get Heidi for her birthday?',
-            type: HACKTYPES.IMP,
-            score: "9/12"
-          },
-          {
-              id: "4342abc23",
-            action: '18hr',
-            headline: 'Recipe to try',
-            title: 'Britta Holt',
-            subtitle: 'We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
-            type: HACKTYPES.SEC,
-            score: "18/23"
-          }
-        ],
+            score: "4/290",
+            bounty: "250",
+            jackpot: "122"
+          }],
         items_closed: [  
           {
-              id: "4342abc23",
-            action: '6 hr',
-            headline: 'Oui oui',
-            title: 'Sandra Adams',
-            subtitle: 'Do you have Paris recommendations? Have you ever been?',
-            type: HACKTYPES.PEN,
-            score: "4/29"
-          },
-          {
-              id: "4342abc23",
             action: '12 hr',
-            headline: 'Birthday gift',
-            title: 'Trevor Hansen',
+            company: 'Uber',
+            title: 'Developer Platform API',
             subtitle: 'Have any ideas about what we should get Heidi for her birthday?',
             type: HACKTYPES.IMP,
-            score: "9/12"
+            score: "9/120",
+            bounty: "600"
           },
           {
-              id: "4342abc23",
             action: '18hr',
-            headline: 'Recipe to try',
-            title: 'Britta Holt',
+            company: 'Booking.com',
+            title: 'Payments API',
             subtitle: 'We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
             type: HACKTYPES.SEC,
-            score: "18/23"
+            score: "18/250",
+            bounty: "750"
+          },
+          {
+            action: 'Friday',
+            company: 'EOS.IO',
+            title: 'Smart Contract',
+            subtitle: "Wish I could come, but I'm out of town this weekend.",
+            type: HACKTYPES.INT,
+            score: "7/800",
+            bounty: "500"
           }
         ]
       }
     },
 
     methods: {
-      toggle (index) {
-        const i = this.selected.indexOf(index)
-
-        if (i > -1) {
-          this.selected.splice(i, 1)
-        } else {
-          this.selected.push(index)
-        }
-      }
+      
+      
     }
   }
 </script>
+
+<style>
+
+.v-expansion-panel__header{
+    padding-left:4px;
+}
+</style>

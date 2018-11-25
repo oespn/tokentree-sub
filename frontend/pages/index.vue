@@ -245,15 +245,51 @@
                 </v-card-actions>
                 
               </v-card>
-              <v-card style="height:400px" v-show="mylistingsCount()<3">
+            </v-flex>  
+            <v-flex xs12>
+              <v-card color="cyan darken-2" class="white--text">
+                <v-layout>
+                  <v-flex xs4>
+                    <v-img
+                      src="https://lunardigitalassets.com/uploads/2018/05/eos.png"
+                      height="125px"
+                      name="item1"
+                      contain
+                    ></v-img>
+                  </v-flex>
+                  <v-flex xs8>
+                    <v-card-title primary-title>
+                      <div>
+                        <div class="headline">Block.one EOS </div>
+                        <div>ERC-20 ICO Smart Contract</div>
+                        <div><small>225 checks, no issues reported.</small></div>
+                      </div>
+                    </v-card-title>
+                  </v-flex>
+                </v-layout>
+                <v-divider light></v-divider>
+                <v-card-actions class="pa-3">
+                  $USD 5,250
+                  <v-spacer></v-spacer>
+                  <v-spacer></v-spacer>
+                  <v-btn flat dark  ><v-icon>widgets</v-icon> View </v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn flat dark><v-icon>code</v-icon> Widget</v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn icon dark><v-icon>share</v-icon></v-btn>
+                </v-card-actions>
+              </v-card>
+            
+
+              <v-card style="height:250px" v-show="mylistingsCount()<3">
                 <v-img 
                       :src="require('~/assets/img/arrow_action.png')" 
                       name="arrowInstruction"
-                      width="200"
+                      width="150"
                       style="position:absolute;right:70px;bottom:70px"
 
                       contain
-            ></v-img>
+                ></v-img>
               </v-card>
               
             </v-flex>
@@ -384,12 +420,21 @@
         </v-list-tile>
 
 
-        <v-list-tile nuxt-link to="/reports" @click="drawer=false">
+        <v-list-tile v-show="accountCompany"  nuxt-link to="/reports" @click="drawer=false">
             <v-list-tile-action>
               <v-icon>bug_report</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-            <v-list-tile-title>{{accountCompany ? "Bug Reports":"My Reports"}} </v-list-tile-title>
+            <v-list-tile-title>Bug Reports</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+        <v-list-tile v-show="!accountCompany" nuxt-link to="/myreports" @click="drawer=false">
+            <v-list-tile-action>
+              <v-icon>bug_report</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+            <v-list-tile-title>My Reports</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
 
@@ -484,8 +529,6 @@ export default {
     drawer: null,
         items: [
           { title: 'Add Listing', icon: 'add_circle', link: '/listingcreate', click: 'drawer=true' },
-          { title: 'Reports', icon: 'bug_report', link: '/reports', click: 'verify = true' },
-          { title: 'Home', icon: 'dashboard', link: '/',  click: 'drawer=true' },
           { title: 'About', icon: 'question_answer', link: '',  click: 'drawer=true' }
         ]
 
