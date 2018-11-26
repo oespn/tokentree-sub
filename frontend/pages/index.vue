@@ -18,7 +18,7 @@
                     bottom
                     right
                     fab
-                    nuxt-link to="/listingcreate" @click="drawer=false"
+                    nuxt-link to="/listing/create" @click="drawer=false"
                     transition="slide-right"
                   >
                     <v-icon>add</v-icon>
@@ -179,7 +179,8 @@
                   <v-spacer></v-spacer>
                   <v-btn flat dark  ><v-icon>launch</v-icon> Check</v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn flat dark><v-icon>bug_report</v-icon> Report</v-btn>
+                   <v-btn nuxt-link to="/myreports/create" flat dark><v-icon>bug_report</v-icon><v-icon>check</v-icon>Report</v-btn>
+                 
                   <v-spacer></v-spacer>
                   <v-btn icon dark><v-icon>share</v-icon></v-btn>
                 </v-card-actions>
@@ -215,7 +216,7 @@
                   <v-spacer></v-spacer>
                   <v-btn flat dark @click="openLink(t)" ><v-icon>launch</v-icon> Check</v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn @click="listingReport(t)" nuxt-link to="/listingcreate" flat dark><v-icon>bug_report</v-icon> Report</v-btn>
+                  <v-btn @click="listingReport(t)" nuxt-link to="/myreports/create" flat dark><v-icon>bug_report</v-icon><v-icon>check</v-icon>Report</v-btn>
                   <v-spacer></v-spacer>
                   <v-btn icon dark @click="listingShare(t)" ><v-icon>share</v-icon></v-btn>
                 </v-card-actions>
@@ -305,7 +306,7 @@
      <!--
         <v-bottom-nav :value="true">
              retire this? 
-            <v-btn nuxt-link to="/listingcreate" flat>
+            <v-btn nuxt-link to="/listing/create" flat>
               <span>Listing</span>
               <v-icon>add_circle</v-icon>
              
@@ -454,14 +455,7 @@
           </v-list-tile-content>
         </v-list-tile>
 
-        <v-list-tile nuxt-link to="/listingcreate" @click="drawer=false">
-            <v-list-tile-action>
-              <v-icon>add_circle</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-            <v-list-tile-title>Test page </v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+        
       </v-list>
       
 
@@ -473,22 +467,46 @@
       <v-list>
 
       </v-list>
+      
+      <v-list>
+      </v-list>
+      <v-list> 
+        
+      </v-list>
+      <v-list>
+      </v-list>
+
+        <v-list>
+      </v-list>
+        <v-list>
+      </v-list>
+        <v-list>
+      </v-list>
+
+        <v-list>
+      </v-list>
+        <v-list>
+      </v-list>
+        <v-list>
+      </v-list>
       <v-img 
                 :src="require('~/assets/img/crowdos_logo.png')" 
                 name="welcomelogo"
                 height="40px"
                 contain
               ></v-img>
-      <v-list>
-      </v-list>
-      <v-list> by team TokenTree
-      </v-list>
-      <v-list>
-      </v-list>
+
+      <v-card>
+        <v-card-text>
+        <p class="text-xs-center">by team TokenTree</p>
+        </v-card-text>
+      </v-card>
+
            <v-img 
                 :src="require('~/assets/tokentree.png')" 
                 name="tokentreelogo"
-                height="40px"
+                width="100%"
+                style="position: absolute;bottom: 0px;"
                 contain
               ></v-img>
 
@@ -528,7 +546,6 @@ export default {
     addhidden: false,
     drawer: null,
         items: [
-          { title: 'Add Listing', icon: 'add_circle', link: '/listingcreate', click: 'drawer=true' },
           { title: 'About', icon: 'question_answer', link: '',  click: 'drawer=true' }
         ]
 

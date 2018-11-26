@@ -10,14 +10,6 @@
             </v-icon>
 
           </v-toolbar-side-icon>
-          <v-img 
-            :src="require('~/assets/img/crowdos_logo.png')" 
-            name="welcomelogo"
-            height="25px" 
-            width="100"
-            contain
-          ></v-img>
-           <v-spacer></v-spacer>
           <v-toolbar-title>
            
           
@@ -48,7 +40,7 @@
                 avatar
                 ripple
                 @click="toggle(index)"
-                nuxt-link to="/reportstatus"
+                nuxt-link to="/reports/status"
                 style = "height: 80px;"
                 >
                 <v-list-tile-content >
@@ -83,6 +75,11 @@
             </v-list>
 
             <v-subheader>
+                Rejected &nbsp;
+                <small class="font-weight-light">&nbsp; You can challenge rejections.  No reports have been rejected</small>
+            </v-subheader>
+
+            <v-subheader>
                 Won
             </v-subheader>
             <v-list two-line>
@@ -92,7 +89,7 @@
                 avatar
                 ripple
                 @click="toggle(index)"
-                nuxt-link to="/reportstatus"
+                nuxt-link to="/reports/status"
                 style = "height: 80px;"
                 >
                 <v-list-tile-content >
@@ -143,7 +140,7 @@
                 :key="item.title"
                 avatar
                 ripple
-                nuxt-link to="/reportstatus"
+                nuxt-link to="/reports/status"
                 @click="toggle(index)"
                 style = "height: 80px;"
                 >

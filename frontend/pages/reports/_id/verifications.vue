@@ -6,6 +6,9 @@
       </v-btn>
       <v-toolbar-title>{{ report.planter }}'s report</v-toolbar-title>
     </v-toolbar>
+    <v-card>
+    <h3>Is this a reportable issue?</h3>
+    </v-card>
     <v-list two-line>
       <v-list-tile
         v-for="(verification, index) in verifications" :key="index">
@@ -15,7 +18,9 @@
         </v-list-tile-content>
         <v-list-tile-action>
           <v-list-tile-action-text>{{ verification.verifiedAt }}</v-list-tile-action-text>
-          <span>{{ verification.health }}%</span>
+                    <v-icon>
+            thumb_up
+          </v-icon>
         </v-list-tile-action>
       </v-list-tile>
     </v-list>

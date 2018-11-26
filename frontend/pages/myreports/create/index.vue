@@ -1,3 +1,5 @@
+<!-- AE:*** this need to be given the _id on a param and dispayed -->
+
 <template>
 <v-card>
         <v-toolbar dark>
@@ -6,22 +8,13 @@
             <v-icon 
                 dark
               >
-               arrow_back
+               clear
             </v-icon>
 
           </v-toolbar-side-icon>
-          <v-img 
-            :src="require('~/assets/img/crowdos_logo.png')" 
-            name="welcomelogo"
-            height="25px" 
-            width="100"
-            contain
-          ></v-img>
-           <v-spacer></v-spacer>
           <v-toolbar-title>
-           
           
-          <v-card-title class="title font-weight-regular">New Listing</v-card-title>
+          <v-card-title class="title font-weight-regular">New Report</v-card-title>
 
           </v-toolbar-title>
           <v-spacer></v-spacer>
@@ -38,47 +31,42 @@
   
         <v-stepper-step :complete="e1 > 1" editable step="1">
             Step 1
-            <small>What is the bounty?</small>
+            <small>Confirm selection</small>
         </v-stepper-step>
 
                 <v-stepper-content step="1">
 
           
             <v-form ref="form" class="form-page" v-model="valid" lazy-validation>
-                <v-text-field
-                v-model="title"
-                :rules="nameRules"
-                :counter="150"
-                label="Title"
-                required
-                ></v-text-field>
-                <v-textarea
-                auto-grow
-                v-model="description"
-                :counter="250"
                 
-                label="Description"
-                required
-                ></v-textarea>
-                <v-select
-                v-model="select"
-                :items="items"
-                :rules="[v => !!v || 'Hack type is required']"
-                label="Hack Type"
-                required
-                ></v-select>
-                <v-text-field
-                v-model="target"
-                placeholder="http://"
-                label="Source code / Target URL"
-                required
-                ></v-text-field>
-                <v-text-field
-                  v-model.number="bounty"
-                  box
-                  label="Bounty EOS"
-                  type="number"
-                ></v-text-field>
+                <p>Reporting as [John Leider] on <p>
+                <h3>EOS</h3>
+                <h4>Smart Contract</h4>
+                
+                
+                <p>{{radioissue}}</p>
+                <v-radio-group v-model="radioissue">
+      <div slot="label">Are there any <strong>Integrity issues</strong> to report?</div>
+      <v-radio value="no">
+        <div slot="label">No, vote as <strong class="success--text">safe</strong></div>
+      </v-radio>
+      <v-radio value="yes">
+        <div slot="label">Yes, I want to report an <strong class="error--text">issue</strong></div>
+      </v-radio>
+    </v-radio-group>
+
+                <v-card v-show="radioissue=='yes'">
+                  <p> I have read &amp; understand what is considered a <strong>reportable issue</strong> for this bounty.</p>
+                  
+
+                  <v-checkbox
+                  v-model="checkbox"
+                  :rules="[v => !!v || 'You must agree to continue!']"
+                  label="Yes, this is reportable"
+                  required
+                  ></v-checkbox>
+                </v-card>
+                
             </v-form>
 
   
@@ -95,56 +83,34 @@
 
   
         <v-stepper-step :complete="e1 > 2" step="2">Step 2
-          <small>Conditions &amp; communication</small>
+          <small>Details and staking</small>
         </v-stepper-step>
         <v-stepper-content step="2">
           <v-card
             class="mb-5"
           >
           <v-form ref="form" class="form-page" v-model="valid" lazy-validation>
+                
+              <v-textarea v-show="radioissue=='yes'"
+                auto-grow
+                v-model="description"
+                :counter="4000"
+                
+                label="Describe the issue"
+                required
+              ></v-textarea>
+                
+        
+                
+                <p>Required stake to vote</p>
                 <v-text-field
-                  v-model.number="maxchecks"
+                  v-model.number="stake"
                   box
-                  label="Max checks"
+                  label="Staking"
                   type="number"
+                  disabled
                 ></v-text-field>
-                 
-                <v-text-field
-                  slot="activator"
-                  v-model="expiry"
-                  label="Expires"
-                  prepend-icon="event"
-                  readonly
-                ></v-text-field>
-                <v-date-picker v-model="date" @input="expiryShowing = false"></v-date-picker>
-
-                <v-text-field
-                v-model="conditions"
-                label="conditions"
-                required
-                ></v-text-field>
-                <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="Security contact E-mail"
-                required
-                ></v-text-field>
-                <v-select
-                v-model="select"
-                :items="items"
-                :rules="[v => !!v || 'Hack type is required']"
-                label="Hack Type"
-                required
-                ></v-select>
-                <h2>crowdOS cares about coders time</h2>
-                <p>All listings are subject to our <a href="">fairness conditions</a></p>
-                <v-checkbox
-                v-model="checkbox"
-                :rules="[v => !!v || 'You must agree to continue!']"
-                label="Do you agree?"
-                required
-                ></v-checkbox>
-
+                
             </v-form>
           
           </v-card>
@@ -153,7 +119,7 @@
             color="primary"
             @click="e1 = 3"
           >
-            Continue
+            Stake Vote
           </v-btn>
   
           <v-btn flat>Cancel</v-btn>
@@ -161,7 +127,7 @@
 
   
         <v-stepper-step step="3">Step 3
-          <small>Share</small>
+          <small>Share rules</small>
         </v-stepper-step>
 
         <v-stepper-content step="3">
@@ -169,14 +135,17 @@
             class="mb-5"
             color="grey lighten-1"
             height="200px"
-          ></v-card>
-  
-          <v-btn
-            color="primary"
-            @click="e1 = 1"
           >
-            close
-          </v-btn>
+          <p v-show="radioissue=='yes'">
+            Please respect the companies' security needs and keep this issue confidential.
+            crowdOS Shield will ensure you are paid even if the company does not pay up. 
+            in this case the vote goes out to the community.  All decision are final.
+          </p> 
+          <p v-show="radioissue=='no'">
+            I just checked @EOSio repo and voted it to be safe!
+            Earn tokens on @crowdOS by having your say.   
+          </p> 
+          </v-card>
   
           <v-btn flat>Done</v-btn>
         </v-stepper-content>
@@ -210,6 +179,8 @@
     data: () => ({
       e1: 0,
       valid: true,
+      radioissue: null,
+      stake: 1,
       title: '',
       description: '',
       conditions: '',

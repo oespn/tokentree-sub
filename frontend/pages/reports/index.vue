@@ -10,14 +10,7 @@
             </v-icon>
 
           </v-toolbar-side-icon>
-          <v-img 
-            :src="require('~/assets/img/crowdos_logo.png')" 
-            name="welcomelogo"
-            height="25px" 
-            width="100"
-            contain
-          ></v-img>
-           <v-spacer></v-spacer>
+          
           <v-toolbar-title>
            
           
@@ -39,13 +32,20 @@
     <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
 
+            <v-subheader>
+                Pending&nbsp;
+                <small class="font-weight-light" v-show='items.length!=0'>&nbsp; The following reports require review</small>
+                <small class="font-weight-light" v-show='items.length==0'>&nbsp; No reports to review</small>
+            </v-subheader>
+
             <v-list two-line>
             <template v-for="(item, index) in items">
                 <v-list-tile
                 :key="item.title"
                 avatar
                 ripple
-                nuxt-link :to="`reports/${item.id}`"
+                nuxt-link :to="'reports/review/'"  
+                
                 @click="toggle(index)"
                 style = "height: 80px;"
                 >
@@ -81,13 +81,7 @@
                     </v-icon>
                     
                 </v-list-tile-action>
-                <v-list-tile-action>
-                    <v-icon                    
-                    >
-                    delete_outline
-                    </v-icon>
-                    
-                </v-list-tile-action>
+
                              
 
                 </v-list-tile>
@@ -101,8 +95,51 @@
 
             <v-subheader>
                 Challenged&nbsp;
-                <small class="font-weight-light">&nbsp; No bounties are in dispute</small>
+                <small class="font-weight-light" v-show='items_challenged!=0'>&nbsp; Rejections sent to the community</small>
+                
+                <small class="font-weight-light" v-show='items_challenged.length==0'>&nbsp; No bounties are in dispute</small>
             </v-subheader>
+            <v-list two-line>
+            <template v-for="(item, index) in items_challenged">
+                <v-list-tile
+                :key="item.title"
+                avatar
+                ripple
+                nuxt-link :to="`reports/${item.id}`"
+                @click="toggle(index)"
+                style = "height: 80px;"
+                >
+                <v-list-tile-content>
+                     
+                    <v-list-tile-title style = "height: 28px;">
+
+                        <v-chip small label :color=item.type.color text-color="white">{{item.type.name}}</v-chip>
+                        {{ item.title }}
+                        <v-chip small label outline>{{item.score}}</v-chip>
+                         
+                    </v-list-tile-title>
+                    <v-list-tile-sub-title class="text--primary">
+                        {{ item.headline }}
+                    </v-list-tile-sub-title>
+                    <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+
+                <v-list-tile-action>
+                    <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
+                    
+                    
+                </v-list-tile-action>
+
+                             
+
+                </v-list-tile>
+                <v-divider
+                v-if="index + 1 < items_challenged.length"
+                :key="index"
+                ></v-divider>
+            </template>
+            </v-list>
+
 
             <v-subheader>
                 Bounties Awarded&nbsp;
@@ -220,12 +257,14 @@ var HACKTYPES = {
             subtitle: 'Have any ideas about what we should get Heidi for her birthday?',
             type: HACKTYPES.IMP,
             score: "9/12"
-          },
+          }
+        ],
+        items_challenged: [
           {
-              id: "4342abc23",
+              id: "aeu3ohi4u2g5iug212345",
             action: '18hr',
             headline: 'Recipe to try',
-            title: 'Britta Holt',
+            title: 'John Holt',
             subtitle: 'We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
             type: HACKTYPES.SEC,
             score: "18/23"

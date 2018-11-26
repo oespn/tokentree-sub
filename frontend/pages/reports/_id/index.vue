@@ -40,10 +40,10 @@ export default {
         ? parseInt((sum / this.report.verifications.length) * 100) / 100
         : null
       return [
-        { icon: 'person', title: this.report.planter, subtitle: 'Planter' },
-        { icon: 'event', title: this.report.plantedAt, subtitle: 'Plantation date' },
-        { icon: 'healing', title: avg ? `${avg}% healthy` : '-', subtitle: 'health' },
-        { icon: 'location_on', title: this.report.address.street, subtitle: this.report.address.city, action: {
+        { icon: 'person', title: this.report.planter, subtitle: 'Reported by' },
+        { icon: 'event', title: this.report.plantedAt, subtitle: 'Reported date' },
+        { icon: 'money', title: '1000 EOS' , subtitle: 'bounty staked' },
+        { icon: 'location_on', title: 'Hong Kong', subtitle: 'Origin', action: {
           icon: 'near_me',
           href: `https://maps.google.com?saddr=Current+Location&daddr=${this.report.lat},${this.report.lng}`
         } },

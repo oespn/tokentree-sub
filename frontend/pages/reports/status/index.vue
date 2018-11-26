@@ -1,4 +1,37 @@
 <template>
+<v-card>
+        <v-toolbar dark>
+          
+          <v-toolbar-side-icon icon nuxt-link to="/myreports"> <!--** AE: need a back action --> 
+            <v-icon 
+                dark
+              >
+               clear
+            </v-icon>
+
+          </v-toolbar-side-icon>
+          <v-toolbar-title>
+          
+          <v-card-title class="title font-weight-regular">Report History</v-card-title>
+
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+
+      </v-toolbar>
+        <v-container
+          id="scroll-target"
+          style="max-height:700px"
+          class="scroll-y"
+          fluid
+
+        >
+                <v-card
+            class="mb-5"
+            color="grey lighten-1"
+            height="200px"
+          >
+          <p>Listing Widget</p>
+          </v-card>
   <v-timeline align-top>
     <v-timeline-item
       v-for="(item, i) in items"
@@ -21,6 +54,17 @@
       </v-card>
     </v-timeline-item>
   </v-timeline>
+
+        <v-card
+            class="mb-5"
+            color="grey lighten-1"
+            height="200px"
+          >
+          <p>Actions (if any)</p>
+          </v-card>
+
+        </v-container>
+        </v-card>
 </template>
 
 
