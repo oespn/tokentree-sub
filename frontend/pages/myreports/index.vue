@@ -47,7 +47,9 @@
                      
                     <v-list-tile-title style = "height: 28px;">
 
-                        <v-chip small label :color=item.type.color text-color="white">{{item.type.name}}</v-chip>
+                        <v-chip small label :color=item.type.color text-color="white">{{item.type.name}}
+                             <v-icon dark>check</v-icon>
+                        </v-chip>
                         {{ item.company }}
                       
                          
@@ -56,6 +58,7 @@
                     </v-list-tile-title>
                     <v-list-tile-sub-title class="text--primary">
                         {{ item.title }}
+                       
                     </v-list-tile-sub-title>
                     <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
                 </v-list-tile-content>
@@ -80,7 +83,7 @@
             </v-subheader>
 
             <v-subheader>
-                Won
+                Bounties awarded
             </v-subheader>
             <v-list two-line>
             <template v-for="(item, index) in items_won">
@@ -96,7 +99,9 @@
                      
                     <v-list-tile-title style = "height: 28px;">
 
-                        <v-chip small label :color=item.type.color text-color="white">{{item.type.name}}</v-chip>
+                        <v-chip small label :color=item.type.color text-color="white">{{item.type.name}}
+                             <v-icon dark>bug_report</v-icon>
+                        </v-chip>
                         {{ item.company }}
                       
                          
@@ -109,7 +114,10 @@
                     <v-list-tile-sub-title class="text--primary">
                         {{ item.title }}
                     </v-list-tile-sub-title>
-                    <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                    <v-list-tile-sub-title>
+                        {{ item.subtitle }}
+                       
+                    </v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
                     <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
@@ -148,7 +156,10 @@
                      
                     <v-list-tile-title style = "height: 28px;">
 
-                        <v-chip small label :color=item.type.color text-color="white">{{item.type.name}}</v-chip>
+                        <v-chip small label :color=item.type.color text-color="white">
+                            {{item.type.name}}
+                            <v-icon dark>bug_report</v-icon>
+                        </v-chip>
                         {{ item.company }}
                       
                          

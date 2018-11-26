@@ -47,18 +47,20 @@
                 nuxt-link :to="'reports/review/'"  
                 
                 @click="toggle(index)"
-                style = "height: 80px;"
+                style = "height: 86px;"
                 >
+                <v-list-tile-avatar>
+                    <img :src="item.avatar">
+                </v-list-tile-avatar>
                 <v-list-tile-content>
                      
-                    <v-list-tile-title style = "height: 28px;">
-
-                        <v-chip small label :color=item.type.color text-color="white">{{item.type.name}}</v-chip>
+                    <v-list-tile-title style = "height: 34px;">
                         {{ item.title }}
                         <v-chip small label outline>{{item.score}}</v-chip>
                          
                     </v-list-tile-title>
-                    <v-list-tile-sub-title class="text--primary">
+                    <v-list-tile-sub-title class="text--primary" style = "height: 34px;">
+                        <v-chip small label :color=item.type.color text-color="white">{{item.type.name}}</v-chip>
                         {{ item.headline }}
                     </v-list-tile-sub-title>
                     <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
@@ -70,14 +72,14 @@
                     v-if="selected.indexOf(index) < 0"
                     color="grey lighten-1"
                     >
-                    star_border
+                    label_outlined
                     </v-icon>
 
                     <v-icon
                     v-else
                     color="yellow darken-2"
                     >
-                    star
+                    label
                     </v-icon>
                     
                 </v-list-tile-action>
@@ -109,6 +111,9 @@
                 @click="toggle(index)"
                 style = "height: 80px;"
                 >
+                <v-list-tile-avatar>
+                    <img :src="item.avatar">
+                </v-list-tile-avatar>
                 <v-list-tile-content>
                      
                     <v-list-tile-title style = "height: 28px;">
@@ -121,7 +126,10 @@
                     <v-list-tile-sub-title class="text--primary">
                         {{ item.headline }}
                     </v-list-tile-sub-title>
-                    <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                    <v-list-tile-sub-title>
+                        {{ item.subtitle }}
+                        
+                    </v-list-tile-sub-title>
                 </v-list-tile-content>
 
                 <v-list-tile-action>
@@ -224,6 +232,7 @@ var HACKTYPES = {
         items: [
           {
             id: "aeu3ohi4u2g5iug212345",
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
             action: '15 min',
             headline: 'Brunch this weekend?',
             title: 'Ali Connors',
@@ -233,6 +242,7 @@ var HACKTYPES = {
           },
           {
               id: "4342abc23",
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
             action: '2 hr',
             headline: 'Summer BBQ',
             title: 'me, Scrott, Jennifer',
@@ -242,6 +252,8 @@ var HACKTYPES = {
           },
           {
               id: "4342abc23",
+
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
             action: '6 hr',
             headline: 'Oui oui',
             title: 'Sandra Adams',
@@ -251,6 +263,8 @@ var HACKTYPES = {
           },
           {
               id: "4342abc23",
+
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
             action: '12 hr',
             headline: 'Birthday gift',
             title: 'Trevor Hansen',
@@ -262,6 +276,8 @@ var HACKTYPES = {
         items_challenged: [
           {
               id: "aeu3ohi4u2g5iug212345",
+
+            avatar: 'https://randomuser.me/api/portraits/men/85.jpg',
             action: '18hr',
             headline: 'Recipe to try',
             title: 'John Holt',
@@ -273,6 +289,8 @@ var HACKTYPES = {
         items_closed: [  
           {
               id: "4342abc23",
+
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/6.jpg',
             action: '6 hr',
             headline: 'Oui oui',
             title: 'Sandra Adams',

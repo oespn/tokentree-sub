@@ -48,10 +48,10 @@
                 <v-radio-group v-model="radioissue">
       <div slot="label">Are there any <strong>Integrity issues</strong> to report?</div>
       <v-radio value="no">
-        <div slot="label">No, vote as <strong class="success--text">safe</strong></div>
+        <div slot="label">No, vote as <strong class="success--text">safe</strong><v-icon class="success--text">check</v-icon></div>
       </v-radio>
       <v-radio value="yes">
-        <div slot="label">Yes, I want to report an <strong class="error--text">issue</strong></div>
+        <div slot="label">Yes, I want to report an <strong class="error--text">issue</strong><v-icon class="error--text">bug_report</v-icon></div>
       </v-radio>
     </v-radio-group>
 

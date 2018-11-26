@@ -155,6 +155,9 @@
               <v-card color="cyan darken-2" class="white--text">
                 <v-layout>
                   <v-flex xs4>
+                    <v-chip small label color="success" text-color="white">
+                            TRENDING  
+                          </v-chip>
                     <v-img
                       src="https://lunardigitalassets.com/uploads/2018/05/eos.png"
                       height="125px"
@@ -166,8 +169,26 @@
                     <v-card-title primary-title>
                       <div>
                         <div class="headline">Block.one EOS </div>
-                        <div>ERC-20 ICO Smart Contract</div>
-                        <div><small>225 checks, no issues reported.</small></div>
+                        <div>ERC-20 ICO Smart Contract  
+                           
+                        </div>
+                        <div><small>89 checks, no issues reported.</small></div>
+                        <v-item-group multiple>
+                        <v-item
+                          v-for="n in 3"
+                          :key="n"
+                        >
+                          <v-chip
+                            slot-scope="{ active, toggle }"
+                            :selected="active"
+                            @click="toggle"
+                            style="height:24px;width:24px;margin-left:-8px;"
+                          >
+                          <v-avatar><img style="width:24px;height:24px;" src='https://randomuser.me/api/portraits/men/35.jpg'>
+                          </v-avatar>
+                          </v-chip>
+                        </v-item>
+                      </v-item-group>
                       </div>
                     </v-card-title>
                   </v-flex>
@@ -191,6 +212,9 @@
               <v-card :class="{'purple': i % 2 === 0, 'indigo darken-2': i % 2 !== 0 }"  class="white--text">
                 <v-layout>
                   <v-flex xs4>
+                      <v-chip small label color="warning" text-color="white">
+                            LAST DAYS  
+                          </v-chip>
                     <v-img
                       :src="t.picture"
                       :name="t.id"
