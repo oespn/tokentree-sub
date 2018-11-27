@@ -6,6 +6,51 @@
 
 using namespace eosio;
 
+// NEW tables to be added:
+// For Firebase DB?
+
+class newTables {
+  public:
+
+    // user completes profile (or signs up with social and adds identity)
+    struct userprofile {
+      account_name userkey; // FK mapping to EOS user account
+      std::string email;
+      std::string first_name;
+      std::string last_name; 
+      std::string avatar;
+
+      uint32_t votes_total; 
+      uint32_t votes_correct; // for user rating
+
+      uint32_t bounties_awarded; 
+      uint32_t challenges_raised; 
+      uint32_t challenges_won;
+
+      uint32_t tokens_earned;
+    }
+
+    struct companyprofile {
+      account_name userkey; // FK mapping to EOS user account
+      std::string email;
+      std::string company_name; 
+      std::string first_name;
+      std::string last_name; 
+      std::string logo;
+
+      uint32_t listings_total; 
+      uint32_t bounties_awarded; 
+    }
+
+
+
+
+}
+
+
+
+// FROM CrowdOS Smart Contract
+
 class crowdos {
   public:
 
@@ -13,6 +58,9 @@ class crowdos {
       uint64_t key; // primary key
       std::string title;
       uint32_t target;
+
+      uint8_t type;
+
       std::string description;
       std::string article;  // repo / URL or identifier 
 
