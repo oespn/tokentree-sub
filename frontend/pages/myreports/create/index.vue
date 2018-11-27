@@ -100,6 +100,12 @@
                 required
               ></v-textarea>
                 
+                <v-text-field
+                v-model="target"
+                placeholder="https://"
+                label="Source code Pull Request or Secret gist (optional)"
+                
+                ></v-text-field>
         
                 
                 <p>Required stake to vote</p>
@@ -116,13 +122,13 @@
           </v-card>
   
           <v-btn
-            color="primary"
+            color="pink"
             @click="e1 = 3"
+            dark
           >
             Stake Vote
           </v-btn>
   
-          <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
 
   

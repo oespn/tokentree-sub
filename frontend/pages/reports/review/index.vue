@@ -1,5 +1,5 @@
 <!-- AE:*** this need to be given the _id on a param and dispayed -->
-
+<!-- DUPE a copy of this View when finalised for the /reports/verify for use in community voting on challenges -->
 <template>
 <v-card>
         <v-toolbar dark>

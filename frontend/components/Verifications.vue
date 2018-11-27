@@ -1,7 +1,7 @@
 <template>
   <v-bottom-sheet :value="value" @input="x => this.$emit('input', x)">
     <v-list>
-      <v-subheader>Vote on an issue</v-subheader>
+      <v-subheader>You have been asked to vote on an issue</v-subheader>
       <v-list-tile
         v-for="tree in trees" :key="tree.id"
         nuxt-link :to="`/trees/${tree.id}`"

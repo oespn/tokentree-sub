@@ -160,7 +160,7 @@
                           </v-chip>
                     <v-img
                       src="https://lunardigitalassets.com/uploads/2018/05/eos.png"
-                      height="125px"
+                      height="80px"
                       name="item1"
                       contain
                     ></v-img>

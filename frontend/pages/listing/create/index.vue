@@ -149,13 +149,12 @@
           </v-card>
   
           <v-btn
-            color="primary"
+            color="pink"
             @click="e1 = 3"
+            dark
           >
             Stake Bounty
           </v-btn>
-  
-          <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
 
   
@@ -169,15 +168,9 @@
             color="grey lighten-1"
             height="200px"
           >
-          <p>Just listed a hot bounty on @crowdOS. Check it out 500 EOS up for grabs if you can find an issue. </p>
+          <p>Just listed! a hot bounty on @crowdOS. Check it out 500 EOS up for grabs if you can find an issue. </p>
           </v-card>
-  
-          <v-btn
-            color="primary"
-            @click="e1 = 1"
-          >
-            close
-          </v-btn>
+
   
           <v-btn flat>Done</v-btn>
         </v-stepper-content>
