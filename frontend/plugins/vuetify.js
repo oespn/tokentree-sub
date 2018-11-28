@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify'
+import Vue from "vue";
+import Vuetify from "vuetify";
 
-Vue.use(Vuetify)//, { theme: {
+Vue.use(Vuetify); //, { theme: {
 //   primary: '#9c27b0',
 //   accent: '#ce93d8',
 //   secondary: '#424242',
