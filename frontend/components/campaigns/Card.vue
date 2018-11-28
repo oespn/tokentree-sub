@@ -3,18 +3,18 @@
     <v-layout>
       <v-flex xs4>
         <v-chip small label color="success" text-color="white">TRENDING</v-chip>
-        <v-img :src="issue.picture" height="80px" name="item1" contain/>
+        <v-img :src="campaign.picture" height="80px" name="item1" contain/>
       </v-flex>
       <v-flex xs8>
         <v-card-title primary-title>
           <div>
-            <div class="headline">{{ issue.company }}</div>
-            <div>{{ issue.title }}</div>
+            <div class="headline">{{ campaign.company }}</div>
+            <div>{{ campaign.title }}</div>
             <div>
-              <small>{{ issue.totalCheck }} checks, {{ issue.totalIssues }} issues reported.</small>
+              <small>{{ campaign.totalCheck }} checks, {{ campaign.totalIssues }} issues reported.</small>
             </div>
             <v-item-group multiple>
-              <v-item v-for="reporter in issue.reporters" :key="reporter.id">
+              <v-item v-for="reporter in campaign.reporters" :key="reporter.id">
                 <v-chip
                   slot-scope="{ active, toggle }"
                   :selected="active"
@@ -33,7 +33,7 @@
     </v-layout>
     <v-divider light></v-divider>
     <v-card-actions class="pa-3">
-      $USD {{ issue.reward }}
+      $USD {{ campaign.reward }}
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
       <v-btn flat dark>
@@ -56,7 +56,7 @@
 <script>
 export default {
   props: {
-    issue: {
+    campaign: {
       type: Object,
       required: true
     }

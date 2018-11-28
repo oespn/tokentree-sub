@@ -15,6 +15,11 @@ module.exports = {
       }
     ]
   },
+  env: {
+    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY || "AIzaSyDZveu5NOk66xUEp91Yo-nySZXks8b_GEo",
+    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN || "localhost",
+    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID || "crowdos-8dfa7"
+  },
   plugins: [{ src: "~/plugins/vuetify.js" }],
   css: ["~/assets/style/app.styl"]
 };
