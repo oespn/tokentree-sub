@@ -1,13 +1,15 @@
 <template>
   <v-toolbar app dark>
     <v-toolbar-title>
-      <v-img
-        :src="require('~/assets/img/crowdos_logo.png')"
-        name="welcomelogo"
-        height="25px"
-        width="100"
-        contain
-      />
+      <nuxt-link to="/">
+        <v-img
+          :src="require('~/assets/img/crowdos_logo.png')"
+          name="welcomelogo"
+          height="25px"
+          width="100"
+          contain
+        />
+      </nuxt-link>
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
@@ -16,7 +18,7 @@
       <v-btn icon>
         <v-icon>search</v-icon>
       </v-btn>
-      <v-menu>
+      <v-menu v-if="user">
         <v-btn icon slot="activator">
           <v-icon>notifications</v-icon>
         </v-btn>
@@ -37,6 +39,11 @@ import Notifications from "~/components/Notifications";
 export default {
   components: {
     Notifications
+  },
+  props: {
+    user: {
+      type: Object
+    }
   }
 };
 </script>

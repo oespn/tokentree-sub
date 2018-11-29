@@ -1,17 +1,17 @@
 <template>
   <v-navigation-drawer permanent fixed dark app>
-    <v-list class="pa-1">
+    <v-list class="pa-1" v-if="user">
       <v-list-tile avatar>
         <v-list-tile-avatar>
-          <img :src="$store.state.user.picture">
+          <img :src="user.photoURL">
         </v-list-tile-avatar>
         <v-list-tile-content>
-          <v-list-tile-title>{{ $store.state.user.name }}</v-list-tile-title>
+          <v-list-tile-title>{{ user.displayName }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
 
-    <v-list class="pt-0" dense>
+    <v-list class="pt-0">
       <v-divider></v-divider>
 
       <v-list-tile nuxt-link to="/">
@@ -40,6 +40,15 @@
           <v-list-tile-title>My submissions</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
+
+      <v-list-tile @click="logout()" v-if="user">
+        <v-list-tile-action>
+          <v-icon>exit_to_app</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Logout</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
     </v-list>
 
     <v-card style="position: absolute; bottom: 0px; width: 100%">
@@ -56,3 +65,23 @@
     </v-card>
   </v-navigation-drawer>
 </template>
+
+<script>
+import { mapActions } from "vuex";
+export default {
+  props: {
+    user: {
+      type: Object
+    }
+  },
+  methods: {
+    ...mapActions({
+      _logout: "session/logout"
+    }),
+    async logout() {
+      await this._logout();
+      this.$router.push("/");
+    }
+  }
+};
+</script>

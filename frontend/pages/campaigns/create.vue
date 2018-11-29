@@ -3,15 +3,14 @@
 </template>
 
 <script>
-import CreateCampaign from "~/components/campaigns/Create"
+import CreateCampaign from "~/components/campaigns/Create";
 export default {
   components: {
     CreateCampaign
   },
+  middleware: ["auth"],
   data: () => ({
-    campaign: {
-      title: "foo"
-    }
+    campaign: {}
   })
-}
+};
 </script>

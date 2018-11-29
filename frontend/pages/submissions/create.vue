@@ -116,6 +116,7 @@
 //import axios from 'axios'
 
 export default {
+  middleware: ["auth"],
   //** AE: not sure how to get this to be called
   // https://snipcart.com/blog/vuejs-transitions-animations
   transition(to, from) {

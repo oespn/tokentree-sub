@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <Sidebar/>
-    <Toolbar/>
+    <Sidebar :user="user"/>
+    <Toolbar :user="user"/>
     <v-content>
       <v-container fluid>
         <nuxt/>
@@ -11,13 +11,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Sidebar from "~/components/Sidebar";
 import Toolbar from "~/components/Toolbar";
 export default {
   components: {
     Sidebar,
     Toolbar
-  }
+  },
+  computed: mapGetters({
+    user: "session/user"
+  })
 };
 </script>
 
