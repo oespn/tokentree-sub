@@ -5,15 +5,13 @@ const state = {
 };
 
 const mutations = {
-  setUser: (state, payload) => {
+  SET_USER: (state, payload) => {
     state.user = payload;
   }
 };
 
 const getters = {
-  user: state => {
-    return state.user;
-  }
+  user: state => state.user
 };
 
 const actions = {
@@ -21,14 +19,14 @@ const actions = {
     const user = await rootState.db.app
       .auth()
       .signInWithPopup(new firebase.auth.GithubAuthProvider());
-    dispatch('autoSignIn', user.user.toJSON())
+    dispatch("autoSignIn", user.user.toJSON());
   },
   autoSignIn({ commit }, user) {
-    commit("setUser", user);
+    commit("SET_USER", user);
   },
   logout({ rootState, commit }) {
     rootState.db.app.auth().signOut();
-    commit("setUser", null);
+    commit("SET_USER", null);
   }
 };
 

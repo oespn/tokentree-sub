@@ -1,12 +1,7 @@
 <template>
   <v-layout column>
     <IntroCard class="mb-3"/>
-    <CampaignCard
-      class="mb-3"
-      v-for="campaign in campaigns"
-      :key="campaign.id"
-      :campaign="campaign"
-    />
+    <CampaignList :campaigns="campaigns"/>
     <v-btn fixed color="error" dark fab bottom right nuxt to="/campaigns/create">
       <v-icon>add</v-icon>
     </v-btn>
@@ -15,12 +10,12 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
-import CampaignCard from "~/components/campaigns/Card";
+import CampaignList from "~/components/campaigns/List";
 import IntroCard from "~/components/IntroCard";
 export default {
   components: {
     IntroCard,
-    CampaignCard
+    CampaignList
   },
   computed: mapGetters({
     campaigns: "campaigns/all"

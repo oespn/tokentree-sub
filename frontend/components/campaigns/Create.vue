@@ -2,7 +2,7 @@
   <v-container>
     <v-card>
       <v-card-title>
-        <h1>Create a campaign</h1>
+        <h1 class="headline">Create a campaign</h1>
       </v-card-title>
       <v-divider/>
       <v-form ref="form">
@@ -170,7 +170,6 @@ export default {
       this.campaign.description = issue.body;
       this.campaign.title = issue.title;
       const labels = issue.labels.map(x => x.name.toLowerCase());
-      debugger
       this.campaign.type = this.types.filter(
         x => labels.indexOf(x.toLowerCase()) >= 0
       )[0];

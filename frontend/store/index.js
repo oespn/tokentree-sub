@@ -2,6 +2,7 @@ import Vuex from "vuex";
 import Firebase from "firebase/app";
 import session from "./session";
 import campaigns from "./campaigns";
+import exchange from "./exchange";
 
 import "firebase/auth";
 import "firebase/firestore";
@@ -18,6 +19,11 @@ const firebaseApp = Firebase.initializeApp({
 const firestore = firebaseApp.firestore();
 firestore.settings({ timestampsInSnapshots: true });
 
+const initStore = async store => {
+  store.dispatch("exchange/fetchAll")
+  setInterval(() => store.dispatch("exchange/fetchAll"), 30 * 60 * 1000) // every 30mn
+};
+
 export default () => {
   const store = new Vuex.Store({
     state: {
@@ -25,7 +31,8 @@ export default () => {
     },
     modules: {
       session,
-      campaigns
+      campaigns,
+      exchange
     }
   });
   firebaseApp
@@ -35,5 +42,6 @@ export default () => {
         ? store.dispatch("session/autoSignIn", user.toJSON())
         : store.dispatch("session/logout")
     );
+  initStore(store);
   return store;
 };
