@@ -22,6 +22,11 @@ const actions = {
     campaigns.forEach(campaign => commit("SET_CAMPAIGN", { campaign }));
     return campaigns;
   },
+  async fetch({ rootState, commit }, id) {
+    const campaign = await rootState.db.collection(COLLECTION).doc(id).get();
+    commit("SET_CAMPAIGN", { campaign });
+    return campaign;
+  },
   async create({ rootState, getters, commit }, { campaign }) {
     const result = await rootState.db.collection(COLLECTION).add(campaign);
     const c = await result.get();
