@@ -20,16 +20,18 @@ const actions = {
   async fetchAll({ rootState, commit }) {
     const campaigns = await rootState.db.collection(COLLECTION).get();
     campaigns.forEach(campaign => commit("SET_CAMPAIGN", { campaign }));
+    return campaigns;
   },
-  async create({ rootState, commit }, { campaign }) {
+  async create({ rootState, getters, commit }, { campaign }) {
     const result = await rootState.db.collection(COLLECTION).add(campaign);
-    commit("SET_CAMPAIGN", { campaign: await result.get() });
+    const c = await result.get();
+    commit("SET_CAMPAIGN", { campaign: c });
+    return getters.all.filter(x => x.id === c.id)[0];
   }
 };
 
 const getters = {
-  all: state => Object.keys(state.all)
-    .map(x => state.all[x])
+  all: state => Object.keys(state.all).map(x => state.all[x])
 };
 
 export default {

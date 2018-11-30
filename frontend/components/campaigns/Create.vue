@@ -177,11 +177,12 @@ export default {
       this.campaign.website = repo.homepage
       this.step = 2;
     },
-    submit() {
+    async submit() {
       if (!this.$refs.form.validate()) {
         return;
       }
-      this.create({ campaign: this.campaign });
+      const campaign = await this.create({ campaign: this.campaign });
+      this.$emit('created', campaign)
     }
   }
 };

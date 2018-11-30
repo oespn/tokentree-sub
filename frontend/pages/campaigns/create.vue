@@ -1,5 +1,5 @@
 <template>
-  <CreateCampaign :campaign="campaign"></CreateCampaign>
+  <CreateCampaign :campaign="campaign" @created="onCreate"></CreateCampaign>
 </template>
 
 <script>
@@ -11,6 +11,11 @@ export default {
   middleware: ["auth"],
   data: () => ({
     campaign: {}
-  })
+  }),
+  methods: {
+    onCreate(campaign) {
+      this.$router.push(`/campaigns/${campaign.id}`)
+    }
+  }
 };
 </script>
